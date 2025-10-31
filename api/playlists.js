@@ -2,11 +2,26 @@ import express from "express";
 const playlistsRouter = express.Router();
 export default playlistsRouter;
 
-import { getPlaylists, insertPlaylist } from "#db/queries/playlists";
+import {
+  getPlaylistById,
+  getPlaylists,
+  insertPlaylist,
+} from "#db/queries/playlists";
 
 playlistsRouter.get("/", async (req, res) => {
   try {
     const results = await getPlaylists();
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(error);
+    throw Error(error);
+  }
+});
+
+playlistsRouter.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const results = await getPlaylistById(id);
     res.status(200).json(results);
   } catch (error) {
     console.error(error);

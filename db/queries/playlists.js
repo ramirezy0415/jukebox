@@ -11,6 +11,20 @@ export async function getPlaylists() {
   }
 }
 
+export async function getPlaylistById(id) {
+  try {
+    const query = `SELECT * FROM playlists WHERE id = $1;`;
+    const values = [id];
+    const {
+      rows: [playlist],
+    } = await db.query(query, values);
+    return playlist;
+  } catch (error) {
+    console.error(error);
+    throw Error(error);
+  }
+}
+
 export async function insertPlaylist({ name, description }) {
   try {
     const query = `
