@@ -2,12 +2,27 @@ import express from "express";
 const playlistsRouter = express.Router();
 export default playlistsRouter;
 
-import { getPlaylists } from "#db/queries/playlists";
+import { getPlaylists, insertPlaylist } from "#db/queries/playlists";
 
 playlistsRouter.get("/", async (req, res) => {
   try {
     const results = await getPlaylists();
     res.status(200).json(results);
+  } catch (error) {
+    console.error(error);
+    throw Error(error);
+  }
+});
+
+playlistsRouter.post("/", async (req, res) => {
+  try {
+    const { name, description } = req.body;
+    if (!name || !description) {
+      res.status(400).json({ error: "Bad Request" });
+    }
+
+    const result = await insertPlaylist({ name, description });
+    res.status(200).json(result);
   } catch (error) {
     console.error(error);
     throw Error(error);
