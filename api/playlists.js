@@ -9,6 +9,8 @@ import {
   getTracksInPlaylistById,
 } from "#db/queries/playlists";
 
+import { insertPlaylistTrack } from "#db/queries/playlists_tracks";
+
 playlistsRouter.get("/", async (req, res) => {
   try {
     const results = await getPlaylists();
@@ -50,6 +52,22 @@ playlistsRouter.post("/", async (req, res) => {
 
     const result = await insertPlaylist({ name, description });
     res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    throw Error(error);
+  }
+});
+
+playlistsRouter.post("/:id/tracks", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { track_id } = req.body;
+    if (!track_id) {
+      res.status(400).json({ error: "Bad Request" });
+    }
+
+    const results = await insertPlaylistTrack({ playlist_id: id, track_id });
+    res.status(200).json(results);
   } catch (error) {
     console.error(error);
     throw Error(error);
