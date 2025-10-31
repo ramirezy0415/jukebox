@@ -1,5 +1,7 @@
 import db from "#db/client";
-import { insertPlaylist, insertTrack, insertPlaylistTrack } from "#db/client";
+import { insertPlaylist } from "#db/queries/playlists";
+import { insertTrack } from "#db/queries/tracks";
+import { insertPlaylistTrack } from "#db/queries/playlists_tracks";
 await db.connect();
 await seed();
 await db.end();

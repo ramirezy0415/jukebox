@@ -10,3 +10,21 @@ export async function getPlaylists() {
     throw Error(error);
   }
 }
+
+export async function insertPlaylist({ name, description }) {
+  try {
+    const query = `
+        INSERT INTO playlists(name, description)
+        VALUES ($1, $2)
+        RETURNING *;
+        `;
+    const values = [name, description];
+    const {
+      rows: [playlist],
+    } = await db.query(query, values);
+    return playlist;
+  } catch (error) {
+    console.error(error);
+    throw Error(error);
+  }
+}

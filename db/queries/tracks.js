@@ -24,3 +24,21 @@ export async function getTracksById(id) {
     throw Error(error);
   }
 }
+
+export async function insertTrack({ name, duration_ms }) {
+  try {
+    const query = `
+        INSERT INTO tracks(name, duration_ms)
+        VALUES($1, $2)
+        RETURNING *;
+    `;
+    const values = [name, duration_ms];
+    const {
+      rows: [track],
+    } = await db.query(query, values);
+    return track;
+  } catch (error) {
+    console.error(error);
+    throw Error(error);
+  }
+}
