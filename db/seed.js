@@ -50,6 +50,10 @@ async function seed() {
       name: "Indie Discoveries",
       description: "Newly released tracks from up-and-coming artists.",
     },
+    {
+      name: "Early 2000s",
+      description: "Tracks from the early 2000s",
+    },
   ];
 
   // 20 Tracks
@@ -74,6 +78,7 @@ async function seed() {
     { name: "Zen Garden", duration_ms: 205000 }, // 18
     { name: "Satin Doll", duration_ms: 235000 }, // 19
     { name: "Uncharted Territory", duration_ms: 270000 }, // 20
+    { name: "Promise", duration_ms: 270000 }, // 20
   ];
 
   try {
